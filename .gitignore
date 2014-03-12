@@ -1,0 +1,8 @@
+#node modules
+node_modules
+
+# webstorm files
+.idea/
+
+# optimized files
+.optimized/

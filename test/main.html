@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Base Application Tests</title>
+	<link rel="stylesheet" href="../public/vendor/qunit/qunit.css" media="screen">
+
+	<script src="../public/vendor/qunit/qunit.js"></script>
+	<script src="../public/vendor/require.js"></script>
+	<!--<script src="../public/vendor/jquery.js"></script>-->
+
+	<script>
+		(function () {
+			QUnit.config.autostart = false;
+			require.config({
+				baseUrl: '../test',
+				paths: {
+					jquery: '../public/vendor/jquery'
+				}
+			});
+		})();
+	</script>
+
+	<script src="main-test.js"></script>
+</head>
+<body>
+<h1 id="qunit-header">Base Application Tests</h1>
+
+<h2 id="qunit-banner"></h2>
+
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-fixture">
+
+</div>
+</body>
+</html>
