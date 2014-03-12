@@ -1,4 +1,4 @@
-##Basic Application Boilerplate
+##Basic Application Boilerplate [![Build Status](https://travis-ci.org/dwaltz/Basic-Application-Boilerplate.png?branch=master)](https://travis-ci.org/dwaltz/Basic-Application-Boilerplate)
 
 This project contains the foundations for a web application using some of my favorite technologies. I use it is a
 reference when I start creating a new application.

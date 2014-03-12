@@ -4,7 +4,7 @@
   "description": "base application meant as a starting place for personal projects",
   "main": "app.js",
   "scripts": {
-    "test": "grunt tests",
+    "test": "grunt test",
     "start": "node app.js"
   },
   "repository": {
