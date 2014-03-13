@@ -28,8 +28,7 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs');
 app.set('views', __dirname +'/views');
 
-// serving front-facing app from static place
-// include before any middleware unnecessary for static files
+// serving static content
 app.use( express.static( __dirname + '/public' ) );
 
 // Emulating RESTful app
