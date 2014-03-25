@@ -65,6 +65,7 @@ Testing
 
 1. Implement server side code testing
 2. Create more complete client application example
+3. Add Bower support
 
 [1]: http://nodejs.org/
 [2]: http://backbonejs.org/
