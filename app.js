@@ -18,6 +18,8 @@ express.static.mime.define( { 'image/svg+xml': [ 'svg' ] } );
 app.use( express.compress() ); // gzipping
 app.set( 'port', process.env.PORT || 3000 ); //setting port
 
+//put in CAS middleware here
+
 // Configuring view engine
 app.engine('hbs', exphbs({
 	defaultLayout: 'main',
@@ -36,15 +38,36 @@ app.use( express.methodOverride() );
 app.use( express.cookieParser() );
 
 // use express session middleware
-// using client cookie storage. Do not store sensitive information on the client. See Redis for an alternative to storing session info
-app.use( express.session({
-	store: new express.session.MemoryStore(),
-	secret: 'mysecret!',
-	key: 'mykey!'
-} ) );
+// user authentication and secrets can be stored in a session.
+if( false  ){
+	var vcap = JSON.parse(process.env.VCAP_SERVICES);
+
+	//Production session storage.
+	//This session storage can also be used locally if you have redis(or session storage db) running locally.
+	app.use(express.session({
+		store: new RedisStore({
+			host: vcap.redis[0].credentials.host,
+			port: vcap.redis[0].credentials.port,
+			db: vcap.redis[0].name,
+			pass: vcap.redis[0].credentials.password
+		}),
+		secret: 'boilerplateSessionSecret',
+		key: 'boilerplate'
+	}));
+} else {
+	//This is session storage for developement.
+	//This can not be used in production code because express uses browser cookie storage by default.
+	app.use(express.session({
+		store: new express.session.MemoryStore(),//Browser cookie storage
+		secret: 'mysecret!',
+		key: 'mykey!'
+	}));
+}
 
 // routing for application
 mainController( app );
 
-http.createServer( app ).listen( app.get( 'port' ) );
-console.log( 'Application listening to port:', app.get( 'port' ));
+// start server
+var server = app.listen(app.get('port'), function() {
+	console.log( 'Application listening to port:', app.get( 'port' ));
+});
