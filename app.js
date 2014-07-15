@@ -1,10 +1,15 @@
 'use strict';
 
-var http    = require( 'http' );
-var express = require( 'express' );
-var app     = express();
+var http        = require( 'http' );
+var express     = require( 'express' );
+var passport    = require('passport'); //Using the passport.js library for authentication
+var app         = express();
 
 var exphbs    = require( 'express3-handlebars' );
+var helpers = require('./lib/hbs-helpers');
+
+//passport strategies and configuration
+var passportStrats = require('./lib/passport-strategies.js');
 
 // getting main controller for routes
 var mainController = require( './controllers/main' );
@@ -24,7 +29,7 @@ app.set( 'port', process.env.PORT || 3000 ); //setting port
 app.engine('hbs', exphbs({
 	defaultLayout: 'main',
 	extname: '.hbs',
-	helpers: {}//,
+	helpers: helpers
 	//partialsDir: __dirname +'/views/partials'
 }));
 app.set('view engine', 'hbs');
@@ -63,6 +68,11 @@ if( false  ){
 		key: 'mykey!'
 	}));
 }
+
+// configuring passport authentication
+passportStrats(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routing for application
 mainController( app );

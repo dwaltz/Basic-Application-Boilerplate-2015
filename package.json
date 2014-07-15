@@ -23,7 +23,10 @@
     "volo": "~0.3.0",
     "underscore": "~1.5.2",
     "grunt-contrib-requirejs": "~0.4.3",
-    "grunt-contrib-less": "~0.10.0"
+    "grunt-contrib-less": "~0.10.0",
+    "passport": "*",
+    "passport-local": "*",
+    "passport-facebook": "*"
   },
   "volo": {
     "baseUrl": "./public/vendor",
@@ -43,7 +46,7 @@
     "grunt-contrib-imagemin": "~0.4.0",
     "grunt-contrib-watch": "*",
     "grunt-contrib-qunit": "*",
-	"grunt-contrib-less": "*",
+    "grunt-contrib-less": "*",
     "grunt-contrib-connect": "*"
   }
 }

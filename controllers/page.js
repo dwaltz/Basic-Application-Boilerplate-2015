@@ -8,4 +8,8 @@ module.exports = function( server ) {
 		res.render( 'index', {title: 'test index page'} );
 	});
 
+	server.get( '/login', function( req, res){
+		res.render( 'login', {layout: 'external'}, {title: 'login'} );
+	});
+
 };
