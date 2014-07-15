@@ -17,6 +17,12 @@ module.exports = function( server, passport ) {
 		failureRedirect : '/signup' // redirect back to the signup page if there is an error
 	}));
 
+	//logout of the application
+	server.get('/logout', function(req, res) {
+		req.logout();
+		res.redirect('/');
+	});
+
 	// send to facebook to do the authentication
 	server.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 

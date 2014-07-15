@@ -7,8 +7,7 @@ module.exports = function( server, passport ) {
 
 	//main authenticated page
 	server.get( '/', common.isLoggedIn, function( req, res ){
-		console.log(req.user);
-		res.render( 'index', {title: 'Authenticated'});
+		res.render( 'index', {title: 'Tech Demo'});
 	});
 
 	//un-authenticated pages
