@@ -1,6 +1,5 @@
 'use strict';
 
-var http        = require( 'http' );
 var express     = require( 'express' );
 var passport    = require('passport'); //Using the passport.js library for authentication
 var app         = express();
@@ -10,7 +9,7 @@ var exphbs    = require( 'express3-handlebars' );
 var helpers = require('./lib/hbs-helpers');
 
 //Loading configuration options
-var config = require('./config')['local'];
+var config = require('./config')[ false ? 'local' : 'prod' ];
 
 //passport strategies and configuration
 var passportStrats = require('./lib/passport-strategies.js');
@@ -29,8 +28,6 @@ express.static.mime.define( { 'font/opentype': [ 'otf' ] } );
 express.static.mime.define( { 'image/svg+xml': [ 'svg' ] } );
 app.use( express.compress() ); // gzipping
 app.set( 'port', process.env.PORT || 3000 ); //setting port
-
-//put in CAS middleware here
 
 // Configuring view engine
 app.engine('hbs', exphbs({
@@ -53,11 +50,11 @@ app.use( express.cookieParser() );
 // use express session middleware
 // user authentication and secrets can be stored in a session.
 if( false  ){
-	var vcap = JSON.parse(process.env.VCAP_SERVICES);
+	//var vcap = JSON.parse(process.env.VCAP_SERVICES);
 
 	//Production session storage.
 	//This session storage can also be used locally if you have redis(or session storage db) running locally.
-	app.use(express.session({
+	/*app.use(express.session({
 		store: new RedisStore({
 			host: vcap.redis[0].credentials.host,
 			port: vcap.redis[0].credentials.port,
@@ -66,7 +63,7 @@ if( false  ){
 		}),
 		secret: 'boilerplateSessionSecret',
 		key: 'boilerplate'
-	}));
+	}));*/
 } else {
 	//This is session storage for developement.
 	//This can not be used in production code because express uses browser cookie storage by default.
@@ -86,6 +83,6 @@ app.use(passport.session());
 mainController( app, passport );
 
 // start server
-var server = app.listen(app.get('port'), function() {
+app.listen(app.get('port'), function() {
 	console.log( 'Application listening to port:', app.get( 'port' ));
 });

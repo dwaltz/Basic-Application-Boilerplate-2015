@@ -1,10 +1,11 @@
 //Application configuration
 module.exports = {
 	'local' : {
+		//Put in facebook application creds here
 		'facebookAuth' : {
-			'clientID' 		: 'your-secret-clientID-here',
-			'clientSecret' 	: 'your-client-secret-here',
-			'callbackURL' 	: 'http://localhost:8080/auth/facebook/callback'
+			'clientID' 		: 'your-facebookapp-clientID-here',
+			'clientSecret' 	: 'your-facebookapp-secret-here',
+			'callbackURL' 	: '/auth/facebook/callback'
 		},
 
 		'mongodb' : {
