@@ -25,7 +25,7 @@ Building and Packaging
 
 1. [Grunt.js] [5] for task automation
 2. [Less] [11] CSS pre-processor for more maintainable css
-3. [Volo] [12] for my client side dependency package manager
+3. [Bower] [12] for my client side dependency package manager
 
 Testing
 
@@ -65,6 +65,7 @@ Testing
 
 1. Implement server side code testing
 2. Create more complete client application example
+3. Add Bower support
 
 [1]: http://nodejs.org/
 [2]: http://backbonejs.org/
@@ -77,7 +78,7 @@ Testing
 [9]: http://underscorejs.org/
 [10]: https://github.com/ericf/express3-handlebars
 [11]: http://lesscss.org/
-[12]: https://github.com/volojs/volo
+[12]: https://github.com/bower/bower
 [13]: http://redis.io/
 [14]: https://www.mongodb.org/
 
