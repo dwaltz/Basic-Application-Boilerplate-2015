@@ -1,15 +1,27 @@
 'use strict';
 
 var _      = require( 'underscore' );
+var common = require( '../lib/common' );
 
-module.exports = function( server ) {
+module.exports = function( server, passport ) {
 
-	server.get( '/', function( req, res ) {
-		res.render( 'index', {title: 'test index page'} );
+	//main authenticated page
+	server.get( '/', common.isLoggedIn, function( req, res ){
+		console.log(req.user);
+		res.render( 'index', {title: 'Authenticated'});
+	});
+
+	//un-authenticated pages
+	server.get( '/welcome', function( req, res ) {
+		res.render( 'welcome', {layout: 'external', title: 'Welcome'});
 	});
 
 	server.get( '/login', function( req, res){
-		res.render( 'login', {layout: 'external'}, {title: 'login'} );
+		res.render( 'login', {layout: 'external', title: 'Login'} );
+	});
+
+	server.get( '/signup', function( req, res){
+		res.render( 'signup', {layout: 'external', title: 'login'} );
 	});
 
 };

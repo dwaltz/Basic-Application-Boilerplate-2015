@@ -26,7 +26,8 @@
     "grunt-contrib-less": "~0.10.0",
     "passport": "*",
     "passport-local": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+	"mongoose": "*"
   },
   "volo": {
     "baseUrl": "./public/vendor",

@@ -4,15 +4,22 @@ var http        = require( 'http' );
 var express     = require( 'express' );
 var passport    = require('passport'); //Using the passport.js library for authentication
 var app         = express();
+var mongoose = require('mongoose');
 
 var exphbs    = require( 'express3-handlebars' );
 var helpers = require('./lib/hbs-helpers');
+
+//Loading configuration options
+var config = require('./config')['local'];
 
 //passport strategies and configuration
 var passportStrats = require('./lib/passport-strategies.js');
 
 // getting main controller for routes
 var mainController = require( './controllers/main' );
+
+// connecting to our db
+mongoose.connect(config.mongodb.url);
 
 // configure express
 express.static.mime.define( { 'application/x-font-woff': [ 'woff' ] } );
@@ -39,6 +46,7 @@ app.set('views', __dirname +'/views');
 app.use( express.static( __dirname + '/public' ) );
 
 // Emulating RESTful app
+app.use( express.bodyParser() );
 app.use( express.methodOverride() );
 app.use( express.cookieParser() );
 
@@ -75,7 +83,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // routing for application
-mainController( app );
+mainController( app, passport );
 
 // start server
 var server = app.listen(app.get('port'), function() {

@@ -1,9 +1,43 @@
 {{#extend "styles"}}
-<!--<link href="/css/dashboard.css" rel="stylesheet"/>-->
+	<link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+		}
+
+		body {
+			background: url('/img/purple-city.jpg') no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+
+		.jumbotron {
+			opacity: 0.9;
+			margin-top:30px;
+		}
+	</style>
 {{/extend}}
 
-{{#extend "scripts" }}
-<!--<script src="/vendor/bootstrap/bootstrap.min.js"></script>-->
-{{/extend}}
+<div class="container" style="height:100%;">
+	<div class="row" style="margin-top:10%;">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="jumbotron text-center">
+				<h1><span class="fa fa-lock"></span>Technology Demo</h1>
 
-<!--the rest of the login body-->
+				<p>Node.js + Mongodb</p>
+				<p class="small">Used Libraries: Express.js, Mongoose, passport.js, bootstrap, Express3-Handlebars</p>
+
+				<p>Login or Register with:</p>
+
+				<a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
+				<a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>
+				<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+				<!--<a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>
+				<a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google+</a>-->
+			</div>
+		</div>
+	</div>
+</div>

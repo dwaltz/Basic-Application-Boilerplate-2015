@@ -80,3 +80,7 @@ Testing
 [12]: https://github.com/volojs/volo
 [13]: http://redis.io/
 [14]: https://www.mongodb.org/
+
+###Special Thanks
+
+[Easy Node Authentication Tutorial](http://scotch.io/tutorials/javascript/easy-node-authentication-linking-all-accounts-together)

@@ -1,43 +1,75 @@
 {{#extend "styles"}}
-	<!--<link href="/css/dashboard.css" rel="stylesheet"/>-->
 	<link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
 	<style>
-		body 		{ padding-top:80px; }
+		html, body {
+			width: 100%;
+			height: 100%;
+		}
+
+		body {
+			background: url('/img/purple-city.jpg') no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+
+		.panel-default {
+			opacity: 0.9;
+			margin-top:30px;
+		}
+		.form-group.last {
+			margin-bottom:0;
+		}
 	</style>
 {{/extend}}
 
-<div class="container">
-	<div class="col-sm-6 col-sm-offset-3">
-
-		<h1><span class="fa fa-sign-in"></span> Login</h1>
-
-		<% if (message.length > 0) { %>
-		<div class="alert alert-danger"><%= message %></div>
-		<% } %>
-
-		<!-- LOGIN FORM -->
-		<form action="/login" method="post">
-			<div class="form-group">
-				<label>Email</label>
-				<input type="text" class="form-control" name="email">
+<div class="container" style="height:100%;">
+	<div class="row" style="margin-top:10%;">
+		<div class="col-md-4 col-md-offset-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>Login</strong>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" action="/login" method="post">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label">
+								Email</label>
+							<div class="col-sm-9">
+								<input class="form-control" id="inputEmail3" placeholder="Email" required="" type="email" name="email">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-3 control-label">
+								Password</label>
+							<div class="col-sm-9">
+								<input class="form-control" id="inputPassword3" placeholder="Password" required="" type="password" name="password">
+							</div>
+						</div>
+						<!--<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-9">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox">
+										Remember me
+									</label>
+								</div>
+							</div>
+						</div>-->
+						<div class="form-group last">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="submit" class="btn btn-success btn-sm">
+									Sign in</button>
+								<!--<button type="reset" class="btn btn-default btn-sm">
+									Reset</button>-->
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="panel-footer">
+					Not Registered? <a href="/signup">Register here</a></div>
 			</div>
-			<div class="form-group">
-				<label>Password</label>
-				<input type="password" class="form-control" name="password">
-			</div>
-
-			<button type="submit" class="btn btn-warning btn-lg">Login</button>
-		</form>
-
-		<hr>
-
-		<p>Need an account? <a href="/signup">Signup</a></p>
-		<p>Or go <a href="/">home</a>.</p>
-
-		<div class="text-center">
-			<p>A demo by <a href="http://scotch.io">Scotch</a>.</p>
-			<p>Visit the <a href="http://scotch.io/tutorials/javascript/easy-node-authentication-setup-and-local">tutorial</a>.</p>
 		</div>
-
 	</div>
 </div>
