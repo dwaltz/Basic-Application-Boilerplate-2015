@@ -1,31 +1,39 @@
 'use strict';
 
-var express     = require( 'express' );
-var passport    = require('passport'); //Using the passport.js library for authentication
-var app         = express();
-var mongoose = require('mongoose');
+//Core Modules
+var fs              = require( 'fs' );
+var http            = require( 'http' );
+var https           = require( 'https' );
+
+//Basic Dependencies
+var express         = require( 'express' );
+var passport        = require('passport'); //Using the passport.js library for authentication
+var mongoose        = require('mongoose');
 
 //required express 4 middleware
-var session = require('express-session');
-var cookieParser = require('cookie-parser');
-var compression = require('compression');
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
+var session         = require('express-session');
+var cookieParser    = require('cookie-parser');
+var compression     = require('compression');
+var bodyParser      = require('body-parser');
+var methodOverride  = require('method-override');
 
 //mongo session storage
-var MongoStore = require('connect-mongo')(session);
+var MongoStore      = require('connect-mongo')(session);
 
-var exphbs    = require( 'express3-handlebars' );
-var helpers = require('./lib/hbs-helpers');
+var exphbs          = require( 'express3-handlebars' );
+var helpers         = require('./lib/hbs-helpers');
 
 //Loading configuration options
-var config = require('./config')[ true ? 'local' : 'prod' ];
+var config         = require( 'config' );
 
 //passport strategies and configuration
-var passportStrats = require('./lib/passport-strategies.js');
+var passportStrats  = require('./lib/passport-strategies.js');
 
 // getting main controller for routes
-var mainController = require( './controllers/main' );
+var mainController  = require( './controllers/main' );
+
+// creating express application
+var app             = express();
 
 // configure express
 express.static.mime.define( { 'application/x-font-woff': [ 'woff' ] } );
@@ -77,11 +85,17 @@ app.use(passport.session());
 // routing for application
 mainController( app, passport );
 
-
 // connecting to our db
 mongoose.connect(config.mongodb.url);
 
-// start server
-app.listen(app.get('port'), function() {
-	console.log( 'Application listening to port:', app.get( 'port' ));
-});
+if ( config.ssl ) {
+	https.createServer({
+		key: fs.readFileSync( config.ssl.key ),
+		cert: fs.readFileSync( config.ssl.cert )
+	}, app ).listen( app.get( 'port' ) );
+
+} else {
+	// otherwise starting the server up without SSL
+	http.createServer( app ).listen( app.get( 'port' ) );
+}
+console.log( 'Application listening to port:', app.get( 'port' ));
