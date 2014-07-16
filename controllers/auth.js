@@ -31,7 +31,7 @@ module.exports = function( server, passport ) {
 		res.redirect('/');
 	});
 
-	// send to facebook to do the authentication
+	//FACEBOOK
 	server.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
 	// handle the callback after facebook has authenticated the user
@@ -41,4 +41,24 @@ module.exports = function( server, passport ) {
 			failureRedirect : '/welcome'
 		}));
 
+	//TWITTER
+	server.get('/connect/twitter', passport.authorize('twitter', { scope : 'email' }));
+
+	// handle the callback after twitter has authorized the user
+	server.get('/connect/twitter/callback',
+		passport.authorize('twitter', {
+			successRedirect : '/profile',
+			failureRedirect : '/'
+		}));
+
+
+	//GOOGLE
+	server.get('/connect/google', passport.authorize('google', { scope : ['profile', 'email'] }));
+
+	// the callback after google has authorized the user
+	server.get('/connect/google/callback',
+		passport.authorize('google', {
+			successRedirect : '/profile',
+			failureRedirect : '/'
+		}));
 };

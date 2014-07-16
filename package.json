@@ -33,7 +33,9 @@
     "body-parser": "~1.4.3",
     "method-override": "~2.1.1",
     "express-session": "~1.6.5",
-    "connect-mongo": "~0.4.1"
+    "connect-mongo": "~0.4.1",
+    "passport-twitter": "~1.0.2",
+    "passport-google-oauth": "~0.1.5"
   },
   "volo": {
     "baseUrl": "./public/vendor",
