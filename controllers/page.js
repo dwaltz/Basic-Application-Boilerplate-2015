@@ -15,12 +15,4 @@ module.exports = function( server, passport ) {
 		res.render( 'welcome', {layout: 'external', title: 'Welcome'});
 	});
 
-	server.get( '/login', function( req, res){
-		res.render( 'login', {layout: 'external', title: 'Login'} );
-	});
-
-	server.get( '/signup', function( req, res){
-		res.render( 'signup', {layout: 'external', title: 'login'} );
-	});
-
 };

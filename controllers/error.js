@@ -3,9 +3,10 @@
 module.exports = function( server ) {
 
 	//404 not found error
-	server.use( function( req, res ) {
+	server.use( function(err, req, res, next ) {
+		var errorCode = err.status || 500;
 
-		if( res.status( 404 ) ){
+		if( res.status( errorCode ) ){
 			// html response
 			if( req.accepts( 'html' ) ) {
 				res.render( '404', {
@@ -23,8 +24,10 @@ module.exports = function( server ) {
 
 			// text response
 			res.type( 'txt' ).send( '404: Not found' );
+			next( err );
+		} else {
+			next();
 		}
-
 	});
 
 	// 500 Server Error
@@ -38,6 +41,8 @@ module.exports = function( server ) {
 				error: 'Server Error'
 			});
 			next( err );
+		} else {
+			next();
 		}
 	});
 };

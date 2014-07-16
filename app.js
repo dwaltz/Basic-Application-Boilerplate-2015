@@ -5,11 +5,21 @@ var passport    = require('passport'); //Using the passport.js library for authe
 var app         = express();
 var mongoose = require('mongoose');
 
+//required express 4 middleware
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var compression = require('compression');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+
+//mongo session storage
+var MongoStore = require('connect-mongo')(session);
+
 var exphbs    = require( 'express3-handlebars' );
 var helpers = require('./lib/hbs-helpers');
 
 //Loading configuration options
-var config = require('./config')[ false ? 'local' : 'prod' ];
+var config = require('./config')[ true ? 'local' : 'prod' ];
 
 //passport strategies and configuration
 var passportStrats = require('./lib/passport-strategies.js');
@@ -17,16 +27,13 @@ var passportStrats = require('./lib/passport-strategies.js');
 // getting main controller for routes
 var mainController = require( './controllers/main' );
 
-// connecting to our db
-mongoose.connect(config.mongodb.url);
-
 // configure express
 express.static.mime.define( { 'application/x-font-woff': [ 'woff' ] } );
 express.static.mime.define( { 'application/x-font-ttf': [ 'ttf' ] } );
 express.static.mime.define( { 'application/vnd.ms-fontobject': [ 'eot' ] } );
 express.static.mime.define( { 'font/opentype': [ 'otf' ] } );
 express.static.mime.define( { 'image/svg+xml': [ 'svg' ] } );
-app.use( express.compress() ); // gzipping
+app.use( compression() ); // gzipping
 app.set( 'port', process.env.PORT || 3000 ); //setting port
 
 // Configuring view engine
@@ -43,36 +50,24 @@ app.set('views', __dirname +'/views');
 app.use( express.static( __dirname + '/public' ) );
 
 // Emulating RESTful app
-app.use( express.bodyParser() );
-app.use( express.methodOverride() );
-app.use( express.cookieParser() );
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+// parse application/vnd.api+json as json
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use( methodOverride() );
+app.use( cookieParser('mysecret!') );
 
-// use express session middleware
-// user authentication and secrets can be stored in a session.
-if( false  ){
-	//var vcap = JSON.parse(process.env.VCAP_SERVICES);
-
-	//Production session storage.
-	//This session storage can also be used locally if you have redis(or session storage db) running locally.
-	/*app.use(express.session({
-		store: new RedisStore({
-			host: vcap.redis[0].credentials.host,
-			port: vcap.redis[0].credentials.port,
-			db: vcap.redis[0].name,
-			pass: vcap.redis[0].credentials.password
-		}),
-		secret: 'boilerplateSessionSecret',
-		key: 'boilerplate'
-	}));*/
-} else {
-	//This is session storage for developement.
-	//This can not be used in production code because express uses browser cookie storage by default.
-	app.use(express.session({
-		store: new express.session.MemoryStore(),//Browser cookie storage
-		secret: 'mysecret!',
-		key: 'mykey!'
-	}));
-}
+//using mongostore for session storage
+app.use(session({
+	resave: true,
+	saveUninitialized: true,
+	secret: 'mySecret!',
+	store: new MongoStore({
+		db : config.mongodb.name
+	})
+}));
 
 // configuring passport authentication
 passportStrats(passport);
@@ -81,6 +76,10 @@ app.use(passport.session());
 
 // routing for application
 mainController( app, passport );
+
+
+// connecting to our db
+mongoose.connect(config.mongodb.url);
 
 // start server
 app.listen(app.get('port'), function() {
