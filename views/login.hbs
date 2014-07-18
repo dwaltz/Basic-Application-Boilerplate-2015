@@ -33,6 +33,9 @@
 				</div>
 				<div class="panel-body">
 					<form class="form-horizontal" role="form" action="/login" method="post">
+						{{#if error}}
+							<div class="alert alert-danger" role="alert">{{msg}}</div>
+						{{/if}}
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-3 control-label">
 								Email</label>

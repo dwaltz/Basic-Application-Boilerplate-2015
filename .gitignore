@@ -6,3 +6,5 @@ node_modules
 
 # optimized files
 .optimized/
+
+.config/runtime.json

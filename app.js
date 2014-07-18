@@ -16,6 +16,7 @@ var cookieParser    = require('cookie-parser');
 var compression     = require('compression');
 var bodyParser      = require('body-parser');
 var methodOverride  = require('method-override');
+var flash           = require('connect-flash');
 
 //mongo session storage
 var MongoStore      = require('connect-mongo')(session);
@@ -81,6 +82,7 @@ app.use(session({
 passportStrats(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 // routing for application
 mainController( app, passport );
