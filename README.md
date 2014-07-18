@@ -12,13 +12,13 @@ Server Side
 
 1. [Express.js][3] as my http server framework. Its Great!
 2. [Express3 Handlebars][10] for my view engine integration
-3. optional [redis] [13] (for session data) and [mongodb] [14] (for general data storage) inclusions
+3. [mongodb] [14] for session storage and data storage
 
 Client Side
 
 1. [jquery.js][7] why do you ask?
 2. [require.js][8] AMD script loader because your mom told you so
-3. [Backbone.js][6] for my client side framework
+3. [Backbone.js][6] for client side architecture
 3. [Underscore.js][9] because we have been together so long and we are comfortable
 
 Building and Packaging
@@ -35,8 +35,10 @@ Testing
 
 1. Clone project
     * `https://github.com/dwaltz/Basic-Application-Boilerplate.git`
-2. Switch into the folder you just cloned and run `npm install`
-3. Start the app with 'node app'
+2. Install/run local instance of mongodb
+3. Switch into the folder you just cloned and run `npm install`
+4. Then install your client dependencies by running `bower install`
+5. Start the app with 'node app'
 
 ###Build Process via GruntJS
 
@@ -65,7 +67,6 @@ Testing
 
 1. Implement server side code testing
 2. Create more complete client application example
-3. Add Bower support
 
 [1]: http://nodejs.org/
 [2]: http://backbonejs.org/

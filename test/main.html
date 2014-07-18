@@ -3,10 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<title>Base Application Tests</title>
-	<link rel="stylesheet" href="../public/vendor/qunit/qunit.css" media="screen">
+	<link rel="stylesheet" href="/bower_components/qunit/qunit/qunit.css" media="screen">
 
-	<script src="../public/vendor/qunit/qunit.js"></script>
-	<script src="../public/vendor/require.js"></script>
+	<script src="/bower_components/qunit/qunit/qunit.js"></script>
+	<script src="/bower_components/requirejs/require.js"></script>
 	<!--<script src="../public/vendor/jquery.js"></script>-->
 
 	<script>
@@ -15,7 +15,7 @@
 			require.config({
 				baseUrl: '../test',
 				paths: {
-					jquery: '../public/vendor/jquery'
+					jquery: '../bower_components/jquery/jquery'
 				}
 			});
 		})();

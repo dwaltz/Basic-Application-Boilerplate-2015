@@ -65,14 +65,24 @@ module.exports = function( grunt ) {
 			compile: {
 				options: {
 					appDir: 'public',
-					baseUrl: 'vendor',
+					baseUrl: '.',
 					mainConfigFile: "public/js/main.js",
 					optimize: 'uglify2',
 					optimizeCss: 'none',
 					dir: 'optimized',
 					preserveLicenseComments: false,
-					generateSourceMaps: true,
-					modules: [{ name: 'js/main' }]
+					generateSourceMaps: false,
+					modules: [
+						{
+							name: 'js/main',
+							exclude: [
+								'backbone',
+								'underscore',
+								'jquery',
+								'json2'
+							]
+						}
+					]
 				}
 			}
 		},

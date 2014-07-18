@@ -57,6 +57,7 @@ app.set('views', __dirname +'/views');
 
 // serving static content
 app.use( express.static( __dirname + '/public' ) );
+app.use( '/bower_components', express.static( __dirname + '/bower_components' ) );
 
 // Emulating RESTful app
 // parse application/x-www-form-urlencoded
