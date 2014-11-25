@@ -1,5 +1,6 @@
 //Application configuration
 module.exports = {
+	'port': 3000, //SITE SECURITY: important Don’t run as root!
 	'facebookAuth' : {
 		'clientID' 		: 'your-facebookapp-clientID-here',
 		'clientSecret' 	: 'your-facebookapp-secret-here',

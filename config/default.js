@@ -1,5 +1,6 @@
 //Application configuration
 module.exports = {
+	'port': 3000,
 	'facebookAuth' : {
 		'clientID' 		: 'your-facebookapp-clientID-here',
 		'clientSecret' 	: 'your-facebookapp-secret-here',

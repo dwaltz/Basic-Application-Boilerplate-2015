@@ -1,12 +1,12 @@
 'use strict';
 
 //Core Modules
-var fs              = require( 'fs' );
-var http            = require( 'http' );
-var https           = require( 'https' );
+var fs              = require('fs');
+var http            = require('http');
+var https           = require('https');
 
 //Basic Dependencies
-var express         = require( 'express' );
+var express         = require('express');
 var passport        = require('passport'); //Using the passport.js library for authentication
 var mongoose        = require('mongoose');
 
@@ -31,19 +31,22 @@ var config         = require( 'config' );
 var passportStrats  = require('./lib/passport-strategies.js');
 
 // getting main controller for routes
-var mainController  = require( './controllers/main' );
+var mainController  = require('./controllers/main');
 
 // creating express application
 var app             = express();
 
-// configure express
+// setting mime types for webfonts and other things
 express.static.mime.define( { 'application/x-font-woff': [ 'woff' ] } );
 express.static.mime.define( { 'application/x-font-ttf': [ 'ttf' ] } );
 express.static.mime.define( { 'application/vnd.ms-fontobject': [ 'eot' ] } );
 express.static.mime.define( { 'font/opentype': [ 'otf' ] } );
 express.static.mime.define( { 'image/svg+xml': [ 'svg' ] } );
+
+app.disable( 'X-Powered-By' ); //SITE SECURITY: this way people cant see that we are using express.js and exploit its vulnerabilities
 app.use( compression() ); // gzipping
-app.set( 'port', process.env.PORT || 3000 ); //setting port
+app.set( 'port', process.env.PORT || config.port ); //setting port
+
 
 // Configuring view engine
 app.engine('hbs', exphbs({
@@ -76,7 +79,11 @@ app.use(session({
 	secret: 'mySecret!',
 	store: new MongoStore({
 		db : config.mongodb.name
-	})
+	}),
+	cookie: {
+		httpOnly: !!config.ssl, //SITE SECURITY:cookies can only be sent over https
+		secure: !!config.ssl //SITE SECURITY:securing cookies if in an ssl environment
+	}
 }));
 
 // configuring passport authentication
@@ -91,10 +98,18 @@ mainController( app, passport );
 // connecting to our db
 mongoose.connect(config.mongodb.url);
 
+// closing the connection with the db on application termination
+process.on('SIGINT', function() {
+	mongoose.connection.close(function () {
+		console.log('Mongoose default connection disconnected through app termination');
+		process.exit(0);
+	});
+});
+
 if ( config.ssl ) {
 	https.createServer({
-		key: fs.readFileSync( config.ssl.key ),
-		cert: fs.readFileSync( config.ssl.cert )
+		key: fs.readFileSync(config.ssl.key, 'utf8'),
+		cert: fs.readFileSync(config.ssl.cert, 'utf8')
 	}, app ).listen( app.get( 'port' ) );
 
 } else {

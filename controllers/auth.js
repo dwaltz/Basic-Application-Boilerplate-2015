@@ -1,7 +1,7 @@
 'use strict';
 
-var _      = require( 'underscore' );
-var common = require( '../lib/common' );
+var _       = require( 'underscore' );
+var common  = require( '../lib/common' );
 
 module.exports = function( server, passport ) {
 
