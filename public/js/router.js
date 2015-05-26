@@ -1,7 +1,7 @@
 define( function() {
 	"use strict";
 
-	//MAY WANT TO ABSTRACT ROUTS OUT INTO A CONTROLLER
+	//MAY WANT TO ABSTRACT ROUTES OUT INTO A CONTROLLER
 	//var Controller	= require('js/controller');
 
 	var Router = Backbone.Router.extend({
@@ -21,7 +21,7 @@ define( function() {
 
 	var router = new Router();
 
-	//enabling push state. NOTE: this creates complications for the middle ware because it is not using # and instead just
+	//enabling push state. NOTE: this creates complications for the middleware because it is not using # and instead just
 	//modifying and re-directing the url
 	Backbone.history.start({ pushState: true });
 
